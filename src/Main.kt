@@ -1,15 +1,21 @@
 import GenUtils.Companion.generateFile
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.sql.Time
 import java.time.LocalDateTime
 import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.collections.iterator
 
+
+/*
+    16 gijų veikia greičiausiai, nesiekia 2 sekundžių .
+    12 gijų trunka panašiai skaičiavimo trukmė apie 2-2,1 sekundes.
+    8  gijos trunka apie 2,3 sekundes.
+    4  gijos trunka 3,2 sekundes.
+    1  gija skaičiavimai svyruoja tarp 9,7 - 10 sekundžių,
+ */
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
