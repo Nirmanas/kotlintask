@@ -16,6 +16,14 @@ it uses Kotlin Coroutines with channels.
 ```bash
 ./gradlew run
 ```
+## In IntelliJ IDEA Ultimate
+1. Open the project in IntelliJ IDEA Ultimate.
+2. Go to `Run` > `Edit Configurations`.
+3. Add a new `Application` configuration.
+4. Set the `Main class` to `Main`.
+5. Set the `Program arguments` to your desired command line arguments.
+6. Apply the changes and run the configuration.
+
 ## Command line arguments
 - `-f`: Path to the input text file.
 - `-t`: Number of coroutines.
