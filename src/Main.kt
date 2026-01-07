@@ -15,6 +15,7 @@ import kotlin.collections.iterator
     8  gijos trunka apie 2,3 sekundes.
     4  gijos trunka 3,2 sekundes.
     1  gija skaičiavimai svyruoja tarp 9,7 - 10 sekundžių,
+    Kai duomenų faile yra 100000 eilučių po 1000 žodžių.
  */
 object Main {
     @JvmStatic
