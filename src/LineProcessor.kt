@@ -4,12 +4,13 @@ import kotlinx.coroutines.channels.Channel
 class LineProcessor(separators: List<String>, val receiver: Channel<List<String>>, val sender: Channel<Map<String, Int>>) {
     val map = mutableMapOf<String, Int>()
     val regex = ("[" + separators.reduce { acc, s -> acc + s } + "\\s]+").toRegex()
-    var processedLines = 0;
+    var processedLines = 0
+
     @OptIn(DelicateCoroutinesApi::class)
     suspend fun processLine() {
         while (!this.receiver.isClosedForReceive) {
             try {
-                val lines = this.receiver.receiveCatching().getOrThrow();
+                val lines = this.receiver.receiveCatching().getOrThrow()
                 for (line in lines) {
                     for (word in line.split(regex=this.regex).filter { !it.isEmpty() }) {
                         if (word.isNotEmpty()) {
@@ -17,7 +18,7 @@ class LineProcessor(separators: List<String>, val receiver: Channel<List<String>
                             map[key] = map.getOrDefault(key, 0) + 1
                         }
                     }
-                    processedLines++;
+                    processedLines++
                 }
             } catch (e: Exception) {
                 break

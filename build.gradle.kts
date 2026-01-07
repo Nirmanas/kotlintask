@@ -18,6 +18,12 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
+sourceSets {
+    main {
+        kotlin.srcDir("src")
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
 }
@@ -27,6 +33,6 @@ kotlin {
 }
 
 application {
-    mainClass = "Main"
+    mainClass.set("Main")
 }
 
