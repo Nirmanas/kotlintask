@@ -2,11 +2,11 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 
 class LineProcessor(separators: List<String>, val receiver: Channel<List<String>>, val sender: Channel<Map<String, Int>>) {
-    val map = mutableMapOf<String, Int>()
     val regex = ("[" + separators.reduce { acc, s -> acc + s } + "\\s]+").toRegex()
     var processedLines = 0
 
     @OptIn(DelicateCoroutinesApi::class)
+    val map = mutableMapOf<String, Int>()
     suspend fun processLine() {
         while (!this.receiver.isClosedForReceive) {
             try {
