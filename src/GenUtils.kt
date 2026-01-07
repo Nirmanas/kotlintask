@@ -25,8 +25,7 @@ class GenUtils {
                 " space, matter, form, shape, change")
             .split(", ")
             .toList()
-        public val separator = listOf(',', ';', ':', '!', '?', '.', ' ')
-            .map { it.toString() }
+        val separator = listOf(",", ";", ":", "!", "?", ".", "")
         @JvmStatic
         fun generateFile(path: String, lnCount: Int): Boolean {
             try {
@@ -50,11 +49,12 @@ class GenUtils {
                                 (1..23)
                                 .map { wordList.random() }
                                 .reduce { acc, s -> s + separator.random() + " " + acc })
+                        writer.newLine()
                         }
                     }
                 return true;
             } catch (e: Exception) {
-                System.out.println(e);
+                println(e);
                 return false
             }
         }
