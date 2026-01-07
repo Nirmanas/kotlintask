@@ -1,6 +1,6 @@
 import java.io.File
 
-class IO_Utils {
+class GenUtils {
     companion object{
 
         private val wordList = (
@@ -25,7 +25,7 @@ class IO_Utils {
                 " space, matter, form, shape, change")
             .split(", ")
             .toList()
-        private val separator = listOf(',', ';', ':', '!', '?', '.', ' ')
+        public val separator = listOf(',', ';', ':', '!', '?', '.', ' ')
             .map { it.toString() }
         @JvmStatic
         fun generateFile(path: String, lnCount: Int): Boolean {
@@ -56,19 +56,6 @@ class IO_Utils {
             } catch (e: Exception) {
                 System.out.println(e);
                 return false
-            }
-        }
-        @JvmStatic
-        fun openFile(path: String): File? {
-            val file = File(path)
-            return if (file.exists()) file else null
-        }
-        @JvmStatic
-        fun readLine(file: File): String? {
-            return try {
-                file.bufferedReader(Charsets.UTF_8).readLine()
-            } catch (e: Exception) {
-                null
             }
         }
     }
