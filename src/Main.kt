@@ -16,10 +16,9 @@ object Main {
         var path = "default_data.txt"
         val listOfArgs: List<String> = listOf(*args)
 
-        val currentTime = LocalDateTime.now()
         // generate file if --generate-file is provided
         if (listOfArgs.contains("--generate-file")) {
-            var lineCount = 1000000
+            var lineCount = 100000
 
 
             if (listOfArgs.contains("-n")) {
@@ -36,7 +35,7 @@ object Main {
                 if (index != -1) path = (if (listOfArgs.size > index + 1) listOfArgs[index + 1] else path)
             }
 
-            if (!generateFile(path, lineCount)) {
+            if (!generateFile(path, lineCount, 1000)) {
                 throw RuntimeException("File could not be generated.")
             }
 
@@ -53,16 +52,20 @@ object Main {
             coroutineCount = if (listOfArgs.size > index + 1) listOfArgs[index + 1].toInt() else 10
         }
 
-        val sendChannel = Channel<String>(capacity = 1000)
-        val receiveChannel = Channel<Map<String,Int>>(capacity = 5)
+        val startTime = LocalDateTime.now()
+        val sendChannel = Channel<List<String>>(capacity = coroutineCount*10)
+        val receiveChannel = Channel<Map<String,Int>>(capacity = coroutineCount)
         runBlocking {
                 launch { RoutineLauncher.initializeRoutines(path, coroutineCount, sendChannel, receiveChannel) }
                 launch { mergeMaps(receiveChannel) }
         }
+        val endTime = LocalDateTime.now()
+
+        println("Duration: ${java.time.Duration.between(startTime, endTime).toMillis()} ms")
     }
+
     @OptIn(DelicateCoroutinesApi::class)
     suspend fun mergeMaps(receiveChannel:Channel<Map<String,Int>>) {
-        println("Started merging")
         val finalMap = mutableMapOf<String, Int>()
         while (!receiveChannel.isClosedForReceive)
         {

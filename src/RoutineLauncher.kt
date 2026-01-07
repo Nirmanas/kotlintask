@@ -6,10 +6,12 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import kotlin.math.ln
+import kotlin.math.pow
 
 object RoutineLauncher {
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun initializeRoutines(path: String, coCount: Int, sendChannel: Channel<String>, resultChannel: Channel<Map<String,Int>>) {
+    suspend fun initializeRoutines(path: String, coCount: Int, sendChannel: Channel<List<String>>, resultChannel: Channel<Map<String,Int>>) {
         val file = File(path)
         if (!file.exists()) {
             println("File does not exist at path: $path")
@@ -21,7 +23,7 @@ object RoutineLauncher {
             launch {
                 val jobs = (1..coCount).map {
                     println("Processing $it")
-                    launch {
+                    launch (Dispatchers.Default) {
                         LineProcessor(GenUtils.separator, sendChannel, resultChannel).processLine()
                     }
                 }
@@ -31,10 +33,13 @@ object RoutineLauncher {
            launch {
                println("Reading file and sending lines to processing channels...")
                withContext(Dispatchers.IO) {
-                   file.useLines { lines ->
-                       for (line in lines) {
-                           sendChannel.send(line)
-                       }
+                   file.readLines()
+                       .chunked(250)
+                       .forEach { lines ->
+                       sendChannel.send(lines) }
+                   while (!sendChannel.isEmpty)
+                   {
+                       // wait for processing to complete and then close the channel
                    }
                    sendChannel.close()
                }

@@ -27,7 +27,7 @@ class GenUtils {
             .toList()
         val separator = listOf(",", ";", ":", "!", "?", ".", "")
         @JvmStatic
-        fun generateFile(path: String, lnCount: Int): Boolean {
+        fun generateFile(path: String, lnCount: Int, wordsLn: Int): Boolean {
             try {
                 val file = File(path)
 
@@ -46,7 +46,7 @@ class GenUtils {
                     .use {
                         writer -> (1..lnCount).forEach{
                             writer.write(
-                                (1..23)
+                                (1..wordsLn)
                                 .map { wordList.random() }
                                 .reduce { acc, s -> s + separator.random() + " " + acc })
                         writer.newLine()
