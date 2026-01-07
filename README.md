@@ -1,6 +1,6 @@
 # Kotlin Concurrent Word Counter
 
-A high-performance file processing application that demonstrates the use of Kotlin Coroutines and Channels for parallel word counting.
+A file processing application that demonstrates the use of Kotlin Coroutines and Channels for parallel word counting.
 
 ## Overview
 
