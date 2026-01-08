@@ -5,8 +5,8 @@ class LineProcessor(separators: List<String>, val receiver: Channel<List<String>
     val regex = ("[" + separators.reduce { acc, s -> acc + s } + "\\s]+").toRegex()
     var processedLines = 0
 
-    @OptIn(DelicateCoroutinesApi::class)
     val map = mutableMapOf<String, Int>()
+    @OptIn(DelicateCoroutinesApi::class)
     suspend fun processLine() {
         while (!this.receiver.isClosedForReceive) {
             try {

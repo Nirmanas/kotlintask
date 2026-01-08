@@ -85,8 +85,11 @@ object Main {
                 } catch (e: Exception) {break}
             }
         }
+        var acc = 0
         for ((key, value) in finalMap) {
             println("$key: $value")
+            acc += value
         }
+        println("Total: $acc")
     }
 }
