@@ -29,7 +29,8 @@ it uses Kotlin Coroutines with channels.
 - `-t`: Number of coroutines.
 - `--generate-file`: Generate a sample text file for testing.
 - `-n`: Number of lines to generate in the sample file (used with `--generate-file`).
-
+- `wc`: Change number of words to generate in each line (used with `--generate-file`).
 ## Example Usage
 ```bash
 ./gradlew run --args="-f file.txt -t 10 --generate-file -n 3000000"```
+```

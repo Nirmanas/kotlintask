@@ -26,7 +26,7 @@ object Main {
         // generate file if --generate-file is provided
         if (listOfArgs.contains("--generate-file")) {
             var lineCount = 100000
-
+            var wordCount = 1000
 
             if (listOfArgs.contains("-n")) {
                 val index = listOfArgs.indexOf("-n")
@@ -42,7 +42,14 @@ object Main {
                 if (index != -1) path = (if (listOfArgs.size > index + 1) listOfArgs[index + 1] else path)
             }
 
-            if (!generateFile(path, lineCount, 1000)) {
+            if (listOfArgs.contains("-wc"))
+            {
+                val index = listOfArgs.indexOf("-wc")
+                if (index != -1) wordCount =
+                    (if (listOfArgs.size > index + 1) listOfArgs[index + 1].toInt() else throw RuntimeException("Provide a word count after -wc"))
+            }
+
+            if (!generateFile(path, lineCount, wordCount)) {
                 throw RuntimeException("File could not be generated.")
             }
 
